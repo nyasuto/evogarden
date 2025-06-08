@@ -9,4 +9,4 @@
 
 ## PR instructions
 Title format: [<EvoGarden>] <Title>
-Branch name must b consit from English
+Branch name must be in English
