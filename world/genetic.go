@@ -38,7 +38,8 @@ func evaluateGenome(r *rand.Rand, genome Genome) int {
 		sim.Step()
 	}
 	dist := abs(agent.X-4) + abs(agent.Y-4)
-	return agent.Energy - dist
+	penalty := genome.Vision/4 + genome.FoodGain/4
+	return agent.Energy - dist - penalty
 }
 
 func crossover(r *rand.Rand, a, b Genome) Genome {
