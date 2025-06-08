@@ -13,7 +13,7 @@ jobs:
           go-version: 'stable'
       - name: Format
         run: |
-          make fmt
+          make fmt | tee fmt.log
           git diff --exit-code
       - name: Lint
         run: make lint
