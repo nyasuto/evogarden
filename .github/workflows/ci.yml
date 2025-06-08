@@ -13,11 +13,11 @@ jobs:
           go-version: 'stable'
       - name: Format
         run: |
-          files=$(gofmt -l $(git ls-files '*.go'))
-          if [ -n "$files" ]; then
-            echo "Go files not formatted:" && echo "$files" && exit 1
-          fi
+          make fmt
+          git diff --exit-code
       - name: Lint
-        run: go vet ./...
+        run: make lint
       - name: Test
-        run: go test ./...
+        run: make test
+      - name: Build
+        run: make build
