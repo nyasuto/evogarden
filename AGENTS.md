@@ -8,5 +8,5 @@
 - run go test 
 
 ## PR instructions
-Title format: [<EvoGarden>] <Title>
-Branch name must be in English
+- Title format: [<EvoGarden>] <Title>
+- Branch name must be in English
