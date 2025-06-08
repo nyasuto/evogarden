@@ -85,17 +85,15 @@ func (a *Agent) MoveTowardsFood() error {
 	if !found {
 		return nil
 	}
-	dx := 0
-	if fx > a.X {
+	dx, dy := 0, 0
+	if fx != a.X {
 		dx = 1
-	} else if fx < a.X {
-		dx = -1
-	}
-	dy := 0
-	if dy == 0 { // prioritise horizontal movement
-		if fy > a.Y {
-			dy = 1
-		} else if fy < a.Y {
+		if fx < a.X {
+			dx = -1
+		}
+	} else if fy != a.Y {
+		dy = 1
+		if fy < a.Y {
 			dy = -1
 		}
 	}
