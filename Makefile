@@ -11,6 +11,7 @@ all: build
 
 # Build the evogarden executable
 build: fmt lint
+	mkdir -p bin
 	go build -o bin/evogarden ./cmd/evogarden
 
 # Run the application
@@ -23,11 +24,11 @@ fmt:
 
 # Lint the code
 lint:
-        $(LINTER) run ./...
+	$(LINTER) run ./...
 
 # Execute unit tests
 test:
-	$(GOTEST) ./...
+	$(GOTEST) -v -race ./...
 
 # Clean build artifacts
 clean:
