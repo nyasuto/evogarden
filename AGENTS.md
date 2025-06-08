@@ -1,4 +1,6 @@
 # Contributor Guide
+## Rule
+- Always generate branch names in English using only lowercase letters, numbers, and hyphens. Translate task descriptions to English. No Japanese or non-ASCII characters.
 
 ## Dev Environment Tips
 - Use golang for backend
@@ -9,4 +11,3 @@
 
 ## PR instructions
 - Title format: [<EvoGarden>] <Title>
-- Branch name must be in English
