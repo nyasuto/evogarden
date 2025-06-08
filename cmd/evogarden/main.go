@@ -27,6 +27,6 @@ func main() {
 			fmt.Printf("move failed: %v\n", err)
 			break
 		}
-		fmt.Printf("Step %d: agent at (%d,%d), energy %d\n", step+1, a.X, a.Y, a.Energy)
+		fmt.Printf("Step %d:\n%s\nEnergy: %d\n\n", step+1, world.Render(g, []*world.Agent{a}), a.Energy)
 	}
 }
