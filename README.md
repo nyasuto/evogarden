@@ -19,11 +19,9 @@
 
 ## 🔧 技術スタック（予定）
 
-- Python 3.x
-- Numpy
-- Matplotlib（可視化用）
+- Golang
 - SQLite（成長ログ保存）
-- Streamlit or Gradio（観察UI）
+- UIは未決
 - 将来的に：強化学習・LLM統合
 
 ## 🚀 今後の発展計画
