@@ -45,3 +45,16 @@ func TestAgentMoveToFood(t *testing.T) {
 		t.Fatalf("expected food to be consumed")
 	}
 }
+
+func TestAgentMoveTowardsFoodAvoidsObstacles(t *testing.T) {
+	g := NewGrid(3, 3)
+	_ = g.Set(1, 0, Obstacle)
+	_ = g.Set(2, 0, Food)
+	a := &Agent{X: 0, Y: 0, Grid: g, Energy: 5, MoveCost: 1, Vision: 10}
+	if err := a.MoveTowardsFood(); err != nil {
+		t.Fatalf("unexpected move error: %v", err)
+	}
+	if a.X != 0 || a.Y != 1 {
+		t.Fatalf("expected move to (0,1), got (%d,%d)", a.X, a.Y)
+	}
+}

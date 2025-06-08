@@ -84,31 +84,80 @@ func (a *Agent) SearchFood() (int, int, bool) {
 
 // MoveTowards searches for food and moves one step toward it if found.
 func (a *Agent) MoveTowardsFood() error {
-	fx, fy, found := a.SearchFood()
+	dx, dy, found := a.nextStepTowardsFood()
 	if !found {
 		return nil
 	}
-	dx, dy := 0, 0
-	if fx != a.X {
-		dx = 1
-		if fx < a.X {
-			dx = -1
+	return a.Move(dx, dy)
+}
+
+// nextStepTowardsFood finds the next step along the shortest path to the
+// nearest food, taking obstacles into account. It returns the delta to move and
+// a boolean indicating whether a path was found.
+func (a *Agent) nextStepTowardsFood() (int, int, bool) {
+	type node struct {
+		x, y, d int
+	}
+
+	startIdx := a.Grid.index(a.X, a.Y)
+	visited := make([]bool, a.Grid.Width*a.Grid.Height)
+	prev := make([]int, a.Grid.Width*a.Grid.Height)
+	for i := range prev {
+		prev[i] = -1
+	}
+
+	q := []node{{a.X, a.Y, 0}}
+	visited[startIdx] = true
+
+	dirs := [4]struct{ dx, dy int }{{1, 0}, {-1, 0}, {0, 1}, {0, -1}}
+
+	var targetIdx int
+	found := false
+
+	for len(q) > 0 {
+		n := q[0]
+		q = q[1:]
+		if a.Vision > 0 && n.d > a.Vision {
+			continue
 		}
-	} else if fy != a.Y {
-		dy = 1
-		if fy < a.Y {
-			dy = -1
+		if n.d != 0 {
+			state, _ := a.Grid.Get(n.x, n.y)
+			if state == Food {
+				targetIdx = a.Grid.index(n.x, n.y)
+				found = true
+				break
+			}
+		}
+		for _, d := range dirs {
+			nx, ny := n.x+d.dx, n.y+d.dy
+			if !a.Grid.InBounds(nx, ny) {
+				continue
+			}
+			idx := a.Grid.index(nx, ny)
+			if visited[idx] {
+				continue
+			}
+			s, _ := a.Grid.Get(nx, ny)
+			if s == Obstacle {
+				continue
+			}
+			visited[idx] = true
+			prev[idx] = a.Grid.index(n.x, n.y)
+			q = append(q, node{nx, ny, n.d + 1})
 		}
 	}
-	if dx != 0 {
-		if err := a.Move(dx, 0); err == nil {
-			return nil
-		}
+
+	if !found {
+		return 0, 0, false
 	}
-	if dy != 0 {
-		if err := a.Move(0, dy); err == nil {
-			return nil
-		}
+
+	// Reconstruct path back to the start to determine the first step.
+	for prev[targetIdx] != startIdx && prev[targetIdx] != -1 {
+		targetIdx = prev[targetIdx]
 	}
-	return ErrBlocked
+	if prev[targetIdx] == -1 {
+		return 0, 0, false
+	}
+	tx, ty := targetIdx%a.Grid.Width, targetIdx/a.Grid.Width
+	return tx - a.X, ty - a.Y, true
 }
