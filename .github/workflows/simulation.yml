@@ -1,0 +1,22 @@
+name: Run Simulation
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  run-simulation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+      - name: Run simulation
+        run: |
+          go run ./cmd/evogarden | tee simulation.log
+      - name: Upload simulation log
+        uses: actions/upload-artifact@v4
+        with:
+          name: simulation-log
+          path: simulation.log
