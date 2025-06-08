@@ -1,7 +1,7 @@
 # Makefile for EvoGarden development tasks
 
 GOFMT=gofmt
-GOVET=go vet
+LINTER=golangci-lint
 GOTEST=go test
 
 .PHONY: all build run fmt lint test clean
@@ -23,7 +23,7 @@ fmt:
 
 # Lint the code
 lint:
-	$(GOVET) ./...
+        $(LINTER) run ./...
 
 # Execute unit tests
 test:
