@@ -1,7 +1,7 @@
 # Makefile for EvoGarden development tasks
 
 GOFMT=gofmt
-LINTER=golangci-lint
+GOLANGCI_LINT=golangci-lint
 GOTEST=go test
 
 .PHONY: all build run fmt lint test clean
@@ -11,7 +11,7 @@ all: build
 
 # Build the evogarden executable
 build: fmt lint
-	mkdir -p bin
+       $(GOLANGCI_LINT) run
 	go build -o bin/evogarden ./cmd/evogarden
 
 # Run the application
