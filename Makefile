@@ -11,7 +11,7 @@ all: build
 
 # Build the evogarden executable
 build: fmt lint
-       $(GOLANGCI_LINT) run
+	$(GOLANGCI_LINT) run
 	go build -o bin/evogarden ./cmd/evogarden
 
 # Run the application
