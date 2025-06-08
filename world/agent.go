@@ -22,7 +22,10 @@ func (a *Agent) Move(dx, dy int) error {
 	if !a.Grid.InBounds(nx, ny) {
 		return ErrOutOfBounds
 	}
-	state, _ := a.Grid.Get(nx, ny)
+	state, err := a.Grid.Get(nx, ny)
+	if err != nil {
+		return err
+	}
 	if state == Obstacle {
 		return ErrBlocked
 	}
