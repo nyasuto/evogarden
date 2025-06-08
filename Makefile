@@ -10,7 +10,7 @@ GOTEST=go test
 all: build
 
 # Build the evogarden executable
-build:
+build: fmt lint
 	go build -o bin/evogarden ./cmd/evogarden
 
 # Run the application
