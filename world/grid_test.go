@@ -35,3 +35,17 @@ func TestGridInBounds(t *testing.T) {
 		t.Fatalf("expected (2,0) to be out of bounds")
 	}
 }
+
+func TestGridFood(t *testing.T) {
+	g := NewGrid(2, 2)
+	if err := g.Set(0, 1, Food); err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	state, err := g.Get(0, 1)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if state != Food {
+		t.Fatalf("expected Food, got %v", state)
+	}
+}

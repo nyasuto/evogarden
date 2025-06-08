@@ -10,6 +10,8 @@ const (
 	Empty CellState = iota
 	// Obstacle indicates that the cell is blocked.
 	Obstacle
+	// Food indicates a food source that agents can consume.
+	Food
 )
 
 // Grid represents a 2D grid world.
