@@ -16,7 +16,7 @@ build: fmt lint
 
 # Run the application
 run:
-	go run ./cmd/evogarden
+	go run ./cmd/evolve
 
 # Format Go source files
 fmt:
