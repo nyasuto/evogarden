@@ -8,12 +8,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@v7
         with:
           go-version: 'stable'
+      # golangci-lint reads the compiler's export data, whose format the Go
+      # release cycle keeps moving forward. Pinning the linter while `stable`
+      # floats lets the toolchain run ahead of it, and the run dies with
+      # "export data version N is greater than maximum supported version M"
+      # on a pull request that changed nothing relevant. Both sides float
+      # together instead.
       - uses: golangci/golangci-lint-action@v9
         with:
-          version: v2.1.6
+          version: latest
 
       - name: Format
         run: |
